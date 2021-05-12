@@ -4,3 +4,4 @@
 - feat: calculate total percent
 - feat: add intuitive tabindex
 - refactor: clean up CSS
+- build: install exceljs for making the sheets
