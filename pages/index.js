@@ -1,10 +1,25 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react';
+import ExcelJS from 'exceljs';
 
 export default function Home() {
+	const [names, setNames] = useState(['', '', '', '', '', '', '', '', '', '']);
+	const [abbreviations, setAbbreviations] = useState(['', '', '', '', '', '', '', '', '', '']);
 	const [percents, setPercents] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 	const [percentTotal, setPercentTotal] = useState(percents.reduce((acc, cur) => acc + cur, 0));
+
+	const updateNames = (value, i) => {
+		const namesCopy = [...names];
+		namesCopy[i] = value;
+		setNames(namesCopy);
+	}
+
+	const updateAbbreviations = (value, i) => {
+		const abbreviationsCopy = [...abbreviations];
+		abbreviationsCopy[i] = value;
+		setAbbreviations(abbreviationsCopy);
+	}
 
 	const updatePercents = (value, i) => {
 		const percentsCopy = [...percents];
@@ -19,6 +34,23 @@ export default function Home() {
 		}, 0);
 		setPercentTotal(totalPercent);
 	};
+
+	// createRandomChoiceList fills an array of 100 with with `percent` number of
+	// each pitch, which gives us a data structure where we can simply pick a
+	// random one from the array and have a `percent` chance of getting that pitch.
+	const createRandomChoiceList = () => {
+		const list = [];
+		for (let i = 0; i < names.length; i++) {
+			for (let j = 0; j < percents[i]; j++) {
+				list.push(abbreviations[i]);
+			}
+		}
+		return list;
+	}
+
+	const makeSheets = () => {
+		console.log(createRandomChoiceList())
+	}
 
 	return (
 		<div className={styles.container}>
@@ -38,6 +70,8 @@ export default function Home() {
 								type="text"
 								tabIndex={i*3 + 1}
 								key={i}
+								value={names[i]}
+								onChange={e => updateNames(e.target.value, i)}
 							/>
 						)}
 					</div>
@@ -48,6 +82,8 @@ export default function Home() {
 								type="text"
 								tabIndex={i*3 + 2}
 								key={i}
+								value={abbreviations[i]}
+								onChange={e => updateAbbreviations(e.target.value, i)}
 							/>
 						)}
 					</div>
@@ -68,7 +104,7 @@ export default function Home() {
 						<div className={styles.total}>{percentTotal}%</div>
 					</div>
 				</div>
-				<button className={styles.button}>Make sheets</button>
+				<button className={styles.button} onClick={makeSheets}>Make sheets</button>
 			</main>
 		</div>
 	)
