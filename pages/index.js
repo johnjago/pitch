@@ -41,7 +41,7 @@ export default function Home() {
 	const createRandomChoiceList = () => {
 		const list = [];
 		for (let i = 0; i < names.length; i++) {
-			for (let j = 0; j < percents[i]; j++) {
+			for (let j = 0; j < (percents[i] * 1.5); j++) {
 				list.push(abbreviations[i]);
 			}
 		}

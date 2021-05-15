@@ -2,6 +2,7 @@
 
 ## 0.3.0
 - feat: generate and save an Excel sheet with filled in pitches (not random yet)
+- fix: fill in 150 random pitches, not 100
 
 ## 0.2.0
 - feat: store the pitch names and abbreviations and generate a list of them
