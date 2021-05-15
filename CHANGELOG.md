@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0
+- feat: generate and save an Excel sheet with filled in pitches (not random yet)
+
 ## 0.2.0
 - feat: store the pitch names and abbreviations and generate a list of them
   to pick from, based on the entered percents, when "Make sheets" is clicked
