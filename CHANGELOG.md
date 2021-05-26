@@ -1,14 +1,17 @@
 # Changelog
 
-## 0.3.0
+## 0.4.0 (2021-05-26)
+- feat: add styles to the inputs
+
+## 0.3.0 (2021-05-15)
 - feat: generate and save an Excel sheet with filled in pitches (not random yet)
 - fix: fill in 150 random pitches, not 100
 
-## 0.2.0
+## 0.2.0 (2021-05-14)
 - feat: store the pitch names and abbreviations and generate a list of them
   to pick from, based on the entered percents, when "Make sheets" is clicked
 
-## 0.1.0
+## 0.1.0 (2021-05-12)
 - feat: calculate total percent
 - feat: add intuitive tabindex
 - refactor: clean up CSS

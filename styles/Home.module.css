@@ -61,8 +61,11 @@
 }
 
 .col input {
-	width: 100%;
+	border: 1px solid #cecece;
+	border-radius: .25rem;
 	margin-bottom: 0.5rem;
+	padding: .5rem;
+	width: 100%;
 }
 
 .button {
