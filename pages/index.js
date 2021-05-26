@@ -50,7 +50,7 @@ export default function Home() {
 
 	const makeSheets = async () => {
 		const workbook = new ExcelJS.Workbook();
-		const worksheet = workbook.addWorksheet('Player sheet 1');
+		const worksheet = workbook.addWorksheet('Player sheet 1', {properties: {defaultColWidth: 4}});
 
 		setUpPlayerSheetHeaders(worksheet);
 		fillPlayerSheet(worksheet, createRandomChoiceList());
@@ -59,9 +59,8 @@ export default function Home() {
 
 		shadeRows(worksheet);
 		addBorders(worksheet);
-		worksheet.getColumn('A').style = {font: {bold: true}}; // TODO: this doesn't apply the style?
+		applyPrintingStyles(worksheet);
 
-		// TODO: Adjust styles for printing
 		// TODO: multiple sequential player/coach sheets in one printing
 
 		const buffer = await workbook.xlsx.writeBuffer({base64: true});
@@ -130,6 +129,7 @@ function setUpPlayerSheetHeaders(worksheet) {
 	worksheet.getRow(1).values = ['', '01', '02', '03', '04', '05', '11', '12', '13', '14', '15', '21', '22', '23', '24', '25'];
 	worksheet.getRow(8).values = ['', '31', '32', '33', '34', '35', '41', '42', '43', '44', '45', '51', '52', '53', '54', '55'];
 	worksheet.getColumn('A').values = ['#1', '1', '2', '3', '4', '5', '', '', '1', '2', '3', '4', '5'];
+	worksheet.getColumn('A').width = 4;
 }
 
 function fillPlayerSheet(worksheet, pitches) {
@@ -153,11 +153,6 @@ function shadeRows(worksheet) {
 				type: 'expression',
 				formulae: ['MOD(ROW(),2)=0'],
 				style: {fill: {type: 'pattern', pattern: 'lightGray'}},
-			},
-			{
-				type: 'expression',
-				formulae: ['ROW()=1'], // TODO: why can't I do the same thing for row 8?
-				style: {font: {bold: true}},
 			}
 		]
 	});
@@ -173,6 +168,17 @@ function addBorders(worksheet) {
 				right: {style:'thin'}
 			};
 		}
+	}
+}
+
+function applyPrintingStyles(worksheet) {
+	const font = { name: 'Arial', family: 4, size: 11, bold: true };
+	worksheet.getRow(1).font = font;
+	worksheet.getRow(8).font = font;
+	worksheet.getColumn('A').font = font;
+
+	for (let i = 1; i <= 13; i++) {
+		worksheet.getRow(i).alignment = { vertical: 'middle', horizontal: 'center' };
 	}
 }
 

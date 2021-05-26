@@ -2,6 +2,7 @@
 
 ## 0.4.0 (2021-05-26)
 - feat: add styles to the inputs
+- feat: adjust styles for printing the cards
 
 ## 0.3.0 (2021-05-15)
 - feat: generate and save an Excel sheet with filled in pitches (not random yet)
