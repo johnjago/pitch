@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.0 (2021-05-31)
+- feat: generate corresponding coach sheet
+
 ## 0.4.0 (2021-05-26)
 - feat: add styles to the inputs
 - feat: adjust styles for printing the cards

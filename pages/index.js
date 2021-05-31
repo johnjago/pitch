@@ -38,28 +38,33 @@ export default function Home() {
 	// createRandomChoiceList fills an array of 100 with with `percent` number of
 	// each pitch, which gives us a data structure where we can simply pick a
 	// random one from the array and have a `percent` chance of getting that pitch.
-	const createRandomChoiceList = () => {
-		const list = [];
+	const randomChoiceList = () => {
+		const randomAbbreviations = [];
+		const randomNames = [];
 		for (let i = 0; i < names.length; i++) {
 			for (let j = 0; j < (percents[i] * 1.5); j++) {
-				list.push(abbreviations[i]);
+				randomAbbreviations.push(abbreviations[i]);
+				randomNames.push(names[i]);
 			}
 		}
-		return list;
+		return {randomAbbreviations, randomNames};
 	}
 
 	const makeSheets = async () => {
 		const workbook = new ExcelJS.Workbook();
-		const worksheet = workbook.addWorksheet('Player sheet 1', {properties: {defaultColWidth: 4}});
 
-		setUpPlayerSheetHeaders(worksheet);
-		fillPlayerSheet(worksheet, createRandomChoiceList());
-		// TODO: Set up coach sheet headers
-		// TODO: Fill in coach sheet
+		const choices = randomChoiceList();
 
-		shadeRows(worksheet);
-		addBorders(worksheet);
-		applyPrintingStyles(worksheet);
+		const playerSheet = workbook.addWorksheet('Player sheet 1', {properties: {defaultColWidth: 4}});
+		setUpPlayerSheetHeaders(playerSheet);
+		const coachSheetMapping = fillPlayerSheet(playerSheet, choices.randomAbbreviations, choices.randomNames, names);
+		shadeRows(playerSheet);
+		addBorders(playerSheet);
+		applyPrintingStyles(playerSheet);
+
+		const coachSheet = workbook.addWorksheet('Coach sheet 1');
+		setUpCoachSheetHeaders(coachSheet);
+		fillCoachSheet(coachSheet, coachSheetMapping);
 
 		// TODO: multiple sequential player/coach sheets in one printing
 
@@ -132,17 +137,33 @@ function setUpPlayerSheetHeaders(worksheet) {
 	worksheet.getColumn('A').width = 4;
 }
 
-function fillPlayerSheet(worksheet, pitches) {
+function fillPlayerSheet(worksheet, randomAbbreviations, randomNames, names) {
 	let pitchIndex = 0;
-	for (let i = 2; i <= 13; i++) {
+
+	const coachSheetMapping = {};
+	for (const name of names) {
+		coachSheetMapping[name] = [];
+	}
+
+	for (let row = 2; row <= 13; row++) {
 		// Skip a blank line and a header
-		if (i === 7 || i === 8) {
+		if (row === 7 || row === 8) {
 			continue;
 		}
-		for (let j = 2; j <= 16; j++) {
-			worksheet.getRow(i).getCell(j).value = pitches[pitchIndex++];
+		for (let col = 2; col <= 16; col++) {
+			worksheet.getRow(row).getCell(col).value = randomAbbreviations[pitchIndex];
+			// The coach sheet contains headers with each pitch names and a list with the col/row call
+			// of the randomly assigned pitches under each header. We need to keep track of these in
+			// order to generate the corresponding coach sheet.
+			coachSheetMapping[randomNames[pitchIndex]].push(
+				worksheet.getRow(row < 8 ? 1 : 8).getCell(col).value +
+				worksheet.getRow(row).getCell(1).value
+			);
+			pitchIndex++;
 		}
 	}
+
+	return coachSheetMapping;
 }
 
 function shadeRows(worksheet) {
@@ -179,6 +200,31 @@ function applyPrintingStyles(worksheet) {
 
 	for (let i = 1; i <= 13; i++) {
 		worksheet.getRow(i).alignment = { vertical: 'middle', horizontal: 'center' };
+	}
+}
+
+function setUpCoachSheetHeaders(worksheet) {
+	worksheet.getRow(1).values = ['#1'];
+	for (let i = 1; i <= 13; i++) {
+		worksheet.getRow(2).getCell(i).style = {fill: {type: 'pattern', pattern: 'lightGray'}};
+		worksheet.getRow(2).getCell(i).border = {
+			top: {style:'thin'},
+			left: {style:'thin'},
+			bottom: {style:'thin'},
+			right: {style:'thin'}
+		};
+	}
+}
+
+function fillCoachSheet(worksheet, coachSheetMapping) {
+	const names = Object.keys(coachSheetMapping);
+	for (let col = 1; col <= names.length; col++) {
+		const name = names[col-1];
+		worksheet.getRow(2).getCell(col).value = name;
+		let pitchCallIndex = 0;
+		for (let row = 3; row <= coachSheetMapping[name].length + 2; row++) {
+			worksheet.getRow(row).getCell(col).value = coachSheetMapping[name][pitchCallIndex++];
+		}
 	}
 }
 
