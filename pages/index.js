@@ -38,26 +38,25 @@ export default function Home() {
 	// createRandomChoiceList fills an array of 100 with with `percent` number of
 	// each pitch, which gives us a data structure where we can simply pick a
 	// random one from the array and have a `percent` chance of getting that pitch.
-	const randomChoiceList = () => {
-		const randomAbbreviations = [];
-		const randomNames = [];
+	const randomChoices = () => {
+		const pairs = [];
 		for (let i = 0; i < names.length; i++) {
 			for (let j = 0; j < (percents[i] * 1.5); j++) {
-				randomAbbreviations.push(abbreviations[i]);
-				randomNames.push(names[i]);
+				const key = abbreviations[i];
+				pairs.push({[key]: names[i]});
 			}
 		}
-		return {randomAbbreviations, randomNames};
+		return pairs;
 	}
 
 	const makeSheets = async () => {
 		const workbook = new ExcelJS.Workbook();
 
-		const choices = randomChoiceList();
+		const choices = randomChoices();
 
 		const playerSheet = workbook.addWorksheet('Player sheet 1', {properties: {defaultColWidth: 4}});
 		setUpPlayerSheetHeaders(playerSheet);
-		const coachSheetMapping = fillPlayerSheet(playerSheet, choices.randomAbbreviations, choices.randomNames, names);
+		const coachSheetMapping = fillPlayerSheet(playerSheet, choices, names);
 		shadeRows(playerSheet);
 		addBorders(playerSheet);
 		applyPrintingStyles(playerSheet);
@@ -137,8 +136,15 @@ function setUpPlayerSheetHeaders(worksheet) {
 	worksheet.getColumn('A').width = 4;
 }
 
-function fillPlayerSheet(worksheet, randomAbbreviations, randomNames, names) {
+function fillPlayerSheet(worksheet, choices, names) {
 	let pitchIndex = 0;
+
+	const randomAbbreviations = [];
+	const randomNames = [];
+	for (const pair of choices) {
+		randomAbbreviations.push(Object.keys(pair)[0]);
+		randomNames.push(Object.values(pair)[0]);
+	}
 
 	const coachSheetMapping = {};
 	for (const name of names) {
