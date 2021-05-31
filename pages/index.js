@@ -46,6 +46,7 @@ export default function Home() {
 				pairs.push({[key]: names[i]});
 			}
 		}
+		shuffle(pairs);
 		return pairs;
 	}
 
@@ -245,5 +246,12 @@ function save(filename, data) {
 		document.body.appendChild(el);
 		el.click();
 		document.body.removeChild(el);
+	}
+}
+
+function shuffle(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
 	}
 }
