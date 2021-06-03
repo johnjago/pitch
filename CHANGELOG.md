@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.0 (2021-06-03)
+- feat: generate multiple sheets at once
+
 ## 0.5.0 (2021-05-31)
 - feat: generate corresponding coach sheet
 - feat: place pitches randomly now that everything else is working

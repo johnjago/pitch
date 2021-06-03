@@ -8,6 +8,7 @@ export default function Home() {
 	const [abbreviations, setAbbreviations] = useState(['', '', '', '', '', '', '', '', '', '']);
 	const [percents, setPercents] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 	const [percentTotal, setPercentTotal] = useState(percents.reduce((acc, cur) => acc + cur, 0));
+	const [numberOfSheets, setNumberOfSheets] = useState(1);
 
 	const updateNames = (value, i) => {
 		const namesCopy = [...names];
@@ -53,20 +54,19 @@ export default function Home() {
 	const makeSheets = async () => {
 		const workbook = new ExcelJS.Workbook();
 
-		const choices = randomChoices();
+		for (let sheetNumber = 1; sheetNumber <= numberOfSheets; sheetNumber++) {
+			const choices = randomChoices();
+			const playerSheet = workbook.addWorksheet('Player ' + sheetNumber, {properties: {defaultColWidth: 4}});
+			setUpPlayerSheetHeaders(playerSheet, sheetNumber);
+			const coachSheetMapping = fillPlayerSheet(playerSheet, choices, names);
+			shadeRows(playerSheet);
+			addBorders(playerSheet);
+			applyPrintingStyles(playerSheet);
 
-		const playerSheet = workbook.addWorksheet('Player sheet 1', {properties: {defaultColWidth: 4}});
-		setUpPlayerSheetHeaders(playerSheet);
-		const coachSheetMapping = fillPlayerSheet(playerSheet, choices, names);
-		shadeRows(playerSheet);
-		addBorders(playerSheet);
-		applyPrintingStyles(playerSheet);
-
-		const coachSheet = workbook.addWorksheet('Coach sheet 1');
-		setUpCoachSheetHeaders(coachSheet);
-		fillCoachSheet(coachSheet, coachSheetMapping);
-
-		// TODO: multiple sequential player/coach sheets in one printing
+			const coachSheet = workbook.addWorksheet('Coach ' + sheetNumber);
+			setUpCoachSheetHeaders(coachSheet, sheetNumber);
+			fillCoachSheet(coachSheet, coachSheetMapping);
+		}
 
 		const buffer = await workbook.xlsx.writeBuffer({base64: true});
 		save('pitches.xlsx', buffer);
@@ -124,16 +124,26 @@ export default function Home() {
 						<div className={styles.total}>{percentTotal}%</div>
 					</div>
 				</div>
+				<div>
+					<label htmlFor="numberOfSheets">Number of sheets</label>
+					<input
+						type="number"
+						id="numberOfSheets"
+						className={styles.numberOfSheets}
+						value={numberOfSheets}
+						onChange={e => setNumberOfSheets(e.target.value)}
+					/>
+				</div>
 				<button className={styles.button} onClick={makeSheets}>Make sheets</button>
 			</main>
 		</div>
 	)
 }
 
-function setUpPlayerSheetHeaders(worksheet) {
+function setUpPlayerSheetHeaders(worksheet, number) {
 	worksheet.getRow(1).values = ['', '01', '02', '03', '04', '05', '11', '12', '13', '14', '15', '21', '22', '23', '24', '25'];
 	worksheet.getRow(8).values = ['', '31', '32', '33', '34', '35', '41', '42', '43', '44', '45', '51', '52', '53', '54', '55'];
-	worksheet.getColumn('A').values = ['#1', '1', '2', '3', '4', '5', '', '', '1', '2', '3', '4', '5'];
+	worksheet.getColumn('A').values = ['#' + number, '1', '2', '3', '4', '5', '', '', '1', '2', '3', '4', '5'];
 	worksheet.getColumn('A').width = 4;
 }
 
@@ -210,8 +220,8 @@ function applyPrintingStyles(worksheet) {
 	}
 }
 
-function setUpCoachSheetHeaders(worksheet) {
-	worksheet.getRow(1).values = ['#1'];
+function setUpCoachSheetHeaders(worksheet, number) {
+	worksheet.getRow(1).values = ['#' + number];
 	for (let i = 1; i <= 13; i++) {
 		worksheet.getRow(2).getCell(i).style = {fill: {type: 'pattern', pattern: 'lightGray'}};
 		worksheet.getRow(2).getCell(i).border = {
