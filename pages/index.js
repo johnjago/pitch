@@ -6,7 +6,7 @@ import styles from '../styles/Home.module.css';
 export default function Home() {
 	const [names, setNames] = useState(['', '', '', '', '', '', '', '', '', '']);
 	const [abbreviations, setAbbreviations] = useState(['', '', '', '', '', '', '', '', '', '']);
-	const [percents, setPercents] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+	const [percents, setPercents] = useState(['', '', '', '', '', '', '', '', '', '']);
 	const [percentTotal, setPercentTotal] = useState(percents.reduce((acc, cur) => acc + cur, 0));
 	const [numberOfSheets, setNumberOfSheets] = useState(1);
 
@@ -117,7 +117,7 @@ export default function Home() {
 								max="100"
 								onFocus={e => e.target.select()}
 								key={i}
-								value={percents[i]}
+								value={percents[i] || ''}
 								onChange={e => updatePercents(Number(e.target.value), i)}
 							/>
 						)}

@@ -2,6 +2,7 @@
 
 ## 0.6.0 (2021-06-03)
 - feat: generate multiple sheets at once
+- change: default percents to empty so that it's easier to delete values
 
 ## 0.5.0 (2021-05-31)
 - feat: generate corresponding coach sheet
