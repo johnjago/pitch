@@ -97,10 +97,11 @@
 	margin-bottom: 3rem;
 	display: flex;
 	justify-content: center;
+	font-size: 0.9rem;
 }
 
 .footerBackground {
-	background-color: #eeeeee;
+	background-color: #f6f6f6;
 	padding: 1.5rem 2rem;
 	border-radius: 50rem;
 }
