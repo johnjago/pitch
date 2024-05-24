@@ -82,9 +82,12 @@ export default function Home() {
 				<meta name="description" content="Free baseball and softball calling card generator. Create printable wristband signs for players and corresponding sheets for coaches. Enter the pitch names, abbreviations, and percentages, and let us do the rest. No sign up required." />
 			</Head>
 			<main className={styles.main}>
-				<h1 className={styles.title}>
-					Pitch Card Generator
-				</h1>
+				<header className={styles.header}>
+					<img src="/baseball.svg" width="40" alt="Baseball graphic" />
+					<h1 className={styles.title}>
+						Pitch Card Generator
+					</h1>
+				</header>
 				<div className={styles.grid}>
 					<div className={styles.col}>
 						<h2>Pitch name</h2>
