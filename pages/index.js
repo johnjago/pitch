@@ -142,6 +142,11 @@ export default function Home() {
 				</div>
 				<button className={styles.button} onClick={makeSheets}>Make sheets</button>
 			</main>
+			<footer className={styles.footer}>
+				<div className={styles.footerBackground}>
+					Made by JC&nbsp;•&nbsp;<a href="https://forms.gle/zw2cgP8iEDtjP8Ey9" target="_blank">Send feedback</a>&nbsp;•&nbsp;<a href="https://buymeacoffee.com/johnjago" target="_blank">Buy me a coffee</a> ☕️
+				</div>
+			</footer>
 		</div>
 	)
 }

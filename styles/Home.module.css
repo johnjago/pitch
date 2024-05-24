@@ -55,6 +55,7 @@
 	border: 0;
 	margin-top: 3rem;
 	padding: 1rem;
+	width: 15rem;
 }
 
 .button:hover {
@@ -90,4 +91,16 @@
 	.title {
 		margin-top: 1rem;
 	}
+}
+
+.footer {
+	margin-bottom: 3rem;
+	display: flex;
+	justify-content: center;
+}
+
+.footerBackground {
+	background-color: #eeeeee;
+	padding: 1.5rem 2rem;
+	border-radius: 50rem;
 }
