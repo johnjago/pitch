@@ -81,16 +81,18 @@ export default function Home() {
 				<meta charset="utf-8" />
 				<meta name="description" content="Free baseball and softball calling card generator. Create printable wristband signs for players and corresponding sheets for coaches. Enter the pitch names, abbreviations, and percentages, and let us do the rest. No sign up required." />
 			</Head>
-			<main className={styles.main}>
-				<header className={styles.header}>
+			<header className={styles.header}>
+				<div className={styles.headerBackground}>
 					<img src="/baseball.svg" width="40" alt="Baseball graphic" />
 					<h1 className={styles.title}>
 						Pitch Card Generator
 					</h1>
-				</header>
+				</div>
+			</header>
+			<main className={styles.main}>
 				<div className={styles.grid}>
 					<div className={styles.col}>
-						<h2>Pitch name</h2>
+						<h2 className={styles.colLabel}>Pitch name</h2>
 						{percents && percents.map((p, i) =>
 							<input
 								type="text"
@@ -102,7 +104,7 @@ export default function Home() {
 						)}
 					</div>
 					<div className={styles.col}>
-						<h2>Pitch abbreviation</h2>
+						<h2 className={styles.colLabel}>Abbreviation</h2>
 						{percents && percents.map((p, i) =>
 							<input
 								type="text"
@@ -114,7 +116,7 @@ export default function Home() {
 						)}
 					</div>
 					<div className={styles.col}>
-						<h2>Pitch %</h2>
+						<h2 className={styles.colLabel}>Pitch %</h2>
 						{percents && percents.map((p, i) =>
 							<input
 								type="number"
@@ -130,21 +132,23 @@ export default function Home() {
 						<div className={styles.total}>{percentTotal}%</div>
 					</div>
 				</div>
-				<div>
-					<label htmlFor="numberOfSheets">Number of sheets</label>
-					<input
-						type="number"
-						id="numberOfSheets"
-						className={styles.numberOfSheets}
-						value={numberOfSheets}
-						onChange={e => setNumberOfSheets(e.target.value)}
-					/>
+				<div className={styles.makeSheetsContainer}>
+					<div className={styles.numberOfSheetsContainer}>
+						<label htmlFor="numberOfSheets">Number of sheets:</label>
+						<input
+							type="number"
+							id="numberOfSheets"
+							className={styles.numberOfSheets}
+							value={numberOfSheets}
+							onChange={e => setNumberOfSheets(e.target.value)}
+						/>
+					</div>
+					<button className={styles.button} onClick={makeSheets}>Make sheets</button>
 				</div>
-				<button className={styles.button} onClick={makeSheets}>Make sheets</button>
 			</main>
 			<footer className={styles.footer}>
 				<div className={styles.footerBackground}>
-					Made by JC&nbsp;•&nbsp;<a href="https://forms.gle/zw2cgP8iEDtjP8Ey9" target="_blank">Send feedback</a>&nbsp;•&nbsp;<a href="https://buymeacoffee.com/johnjago" target="_blank">Buy me a coffee</a> ☕️
+					<span className={styles.whitespaceNowrap}>Made by JC</span>&nbsp;•&nbsp;<a href="https://forms.gle/zw2cgP8iEDtjP8Ey9" target="_blank" className={styles.whitespaceNowrap}>Send feedback</a>&nbsp;•&nbsp;<a href="https://buymeacoffee.com/johnjago" target="_blank" className={styles.whitespaceNowrap}>Buy me a coffee</a>&nbsp;☕️
 				</div>
 			</footer>
 		</div>

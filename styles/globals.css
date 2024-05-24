@@ -7,6 +7,10 @@ body {
 	color: #333;
 }
 
+h2 {
+	font-size: 1.4rem;
+}
+
 a {
 	color: #0072f5;
 	text-decoration: underline;
