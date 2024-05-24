@@ -76,7 +76,7 @@ export default function Home() {
 		<div className={styles.container}>
 			<Head>
 				<title>Pitch Card Generator</title>
-				<link rel="icon" href="/favicon.ico" />
+				<link rel="icon" href="/baseball.svg" />
 			</Head>
 			<main className={styles.main}>
 				<h1 className={styles.title}>
