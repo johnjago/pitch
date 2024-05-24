@@ -24,7 +24,8 @@
 }
 
 .title {
-	align-content: center;
+	display: flex;
+	align-items: center;
 	margin: 0 0 0 0.75rem;
 	line-height: 1.15;
 	font-size: 1.8rem;
