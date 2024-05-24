@@ -1,5 +1,17 @@
 # Changelog
 
+## 2024-05-24 (d4097327654dca9cde6f62aaf563ef7a9e5b49e2)
+
+It’s been a while, but I realized people are using this app a lot! So much for it being a sample project!
+
+I made a number of small improvements, including adding styling and graphics to make it feel more polished, meta tags to make it more discoverable, and links for getting in touch with me in case anyone wants to send feedback.
+
+It’s also mobile-friendly now.
+
+### Behind the scenes
+
+Next.js has been upgraded from 10 to 14.
+
 ## 2021-06-03 (0345f2403f9e5d51f4f0ce82837223c1488f3e7e)
 
 - Generate multiple sets of sheets at once.
