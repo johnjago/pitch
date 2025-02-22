@@ -149,7 +149,9 @@ export default function Home() {
 			</main>
 			<footer className={styles.footer}>
 				<div className={styles.footerBackground}>
-					<span className={styles.whitespaceNowrap}>Made by JC</span>&nbsp;•&nbsp;<a href="https://forms.gle/zw2cgP8iEDtjP8Ey9" target="_blank" className={styles.whitespaceNowrap}>Send feedback</a>&nbsp;•&nbsp;<a href="https://buymeacoffee.com/johnjago" target="_blank" className={styles.whitespaceNowrap}>Buy me a coffee</a>&nbsp;☕️
+					<span className={styles.whitespaceNowrap}>
+						👋 <a href="https://forms.gle/zw2cgP8iEDtjP8Ey9" target="_blank" className={styles.whitespaceNowrap}>Send feedback</a>
+					</span>
 				</div>
 			</footer>
 		</div>
